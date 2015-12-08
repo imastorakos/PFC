@@ -1,7 +1,11 @@
 #include "PfcApp.h"
 #include "Moose.h"
 #include "AppFactory.h"
-#include "ModulesApp.h"
+#include "Factory.h"
+
+#include "BoundingBoxFuncIC.h"
+#include "CoupledPFC.h"
+#include "BasePFC.h"
 
 template<>
 InputParameters validParams<PfcApp>()
@@ -19,11 +23,11 @@ PfcApp::PfcApp(InputParameters parameters) :
     MooseApp(parameters)
 {
   Moose::registerObjects(_factory);
-  ModulesApp::registerObjects(_factory);
+//  ModulesApp::registerObjects(_factory);
   PfcApp::registerObjects(_factory);
 
   Moose::associateSyntax(_syntax, _action_factory);
-  ModulesApp::associateSyntax(_syntax, _action_factory);
+//  ModulesApp::associateSyntax(_syntax, _action_factory);
   PfcApp::associateSyntax(_syntax, _action_factory);
 }
 
@@ -44,6 +48,9 @@ extern "C" void PfcApp__registerObjects(Factory & factory) { PfcApp::registerObj
 void
 PfcApp::registerObjects(Factory & factory)
 {
+  registerInitialCondition(BoundingBoxFuncIC);   //<-- Register kernels here
+  registerKernel(CoupledPFC); 
+  registerKernel(BasePFC);
 }
 
 // External entry point for dynamic syntax association

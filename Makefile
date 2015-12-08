@@ -20,8 +20,8 @@ include $(FRAMEWORK_DIR)/build.mk
 include $(FRAMEWORK_DIR)/moose.mk
 
 ################################## MODULES ####################################
-ALL_MODULES := yes
-include $(MOOSE_DIR)/modules/modules.mk
+#ALL_MODULES := yes
+#include $(MOOSE_DIR)/modules/modules.mk
 ###############################################################################
 
 # dep apps
